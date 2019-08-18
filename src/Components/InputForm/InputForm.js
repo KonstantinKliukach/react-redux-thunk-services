@@ -1,12 +1,29 @@
 import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 
+import { changeServiceField, addService, clearFields }from '../../Actions'
+
 import './InputForm.css'
 
 const  InputForm = () =>{
-  const item = {}
-  const handleChange = event => { const {name, value} = event.target; }
-  const handleSubmit = event => { event.preventDefault(); }
+  const item = useSelector(state => state.serviceAdd)
+  const dispatch = useDispatch()
+
+  const handleChange = event => { 
+    const {name, value} = event.target;
+    dispatch(changeServiceField(name, value)) 
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault(); 
+    const {name, price} = item;
+    dispatch(addService(name, price))
+  }
+
+  const handleCancel = (e) => {
+    e.preventDefault(); 
+    dispatch(clearFields())
+  }
 
   return (
     <form className='input-form' onSubmit={handleSubmit}>
@@ -23,11 +40,11 @@ const  InputForm = () =>{
           <input className="form-control" id="inputDate" placeholder="Введите название услуги" name="name" value={item.name} onChange={handleChange}/>
         </div>
         <div className="col-md-4">
-          <input className="form-control" id="inputDistance" placeholder="Введите стоимость услуги" name="cost" value={item.value} onChange={handleChange}/>
+          <input className="form-control" id="inputDistance" placeholder="Введите стоимость услуги" name="price" value={item.price} onChange={handleChange}/>
         </div>
         <div className="col-md-3 d-flex justify-content-around ">
           <button type="submit" className="btn btn-outline-secondary">Ок</button>
-          <button className="btn btn-outline-secondary">Отмена</button>
+          <button className="btn btn-outline-secondary" onClick={handleCancel}>Отмена</button>
         </div>
       </div>
     </form>

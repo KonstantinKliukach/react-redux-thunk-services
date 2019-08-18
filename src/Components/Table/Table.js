@@ -1,20 +1,21 @@
 import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
+import {removeService} from '../../Actions/'
 
 import './Table.css'
 
 const Table = () => {
 
   const services = useSelector(state => state.serviceList)
+  const dispatch = useDispatch()
 
   const handleDelete = (id) => {
-    console.log(id)
+    dispatch(removeService(id))
   }
 
   const handleEdit = (id) => {
     console.log(id)
   }
-
   return (
   <table className="table col-md-10">
     <thead className='thead-light'>
@@ -25,16 +26,16 @@ const Table = () => {
     </tr>
     </thead>
     <tbody>
-      {services.map((services, index) => {
+      {services.map((service) => {
         return (
-          <tr key={index}>
-            <td>{services.name}</td>
-            <td>{services.price}</td>
+          <tr key={service.id}>
+            <td>{service.name}</td>
+            <td>{service.price}</td>
             <td>
-              <button type="button" className="btn btn-outline-success btn-sm action-button" onClick={()=>handleEdit(index)}>
+              <button type="button" className="btn btn-outline-success btn-sm action-button" onClick={()=>handleEdit(service.id)}>
                 <i className="fa fa-pencil" />
               </button>
-              <button type="button" className="btn btn-outline-danger btn-sm action-button" onClick={()=>handleDelete(index)}>
+              <button type="button" className="btn btn-outline-danger btn-sm action-button" onClick={()=>handleDelete(service.id)}>
                 <i className="fa fa-trash-o" />
               </button>
             </td>

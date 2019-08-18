@@ -13,7 +13,7 @@ function serviceListReducer(state = initialState, action) {
       const {name, price} = action.payload;
       return [...state, {id: nanoid(), name, price: Number(price)}];
     case REMOVE_SERVICE:
-        const { id } = action.payload;
+      const { id } = action.payload;
       return state.filter(service => service.id !== id);
     /*case EDIT_SERVICE:
       return state.forEach(service => {
@@ -25,6 +25,7 @@ function serviceListReducer(state = initialState, action) {
     default:
       return state;
   }
+
 }
 
 export default serviceListReducer
