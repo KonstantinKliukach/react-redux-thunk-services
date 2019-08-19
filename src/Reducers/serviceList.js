@@ -1,6 +1,6 @@
 import nanoid from 'nanoid';
 
-import {ADD_SERVICE, REMOVE_SERVICE, EDIT_SERVICE} from '../Actions'
+import {ADD_SERVICE, REMOVE_SERVICE, SET_SERVICE} from '../Actions'
 
 const initialState = [
   {id: nanoid(), name: 'Замена стекла', price: 21000},
@@ -15,13 +15,15 @@ function serviceListReducer(state = initialState, action) {
     case REMOVE_SERVICE:
       const { id } = action.payload;
       return state.filter(service => service.id !== id);
-    /*case EDIT_SERVICE:
-      return state.forEach(service => {
-        if (service.id === id) {
-          service.name = name;
-          service.price = price;
+    case SET_SERVICE:
+      let newState = [...state];
+      newState.forEach(service => {
+        if (service.id === action.payload.id) {
+          service.name = action.payload.name;
+          service.price = action.payload.price;
         }
-      })*/
+      })
+      return newState
     default:
       return state;
   }

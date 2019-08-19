@@ -1,12 +1,14 @@
 import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 
-import { changeServiceField, addService, clearFields }from '../../Actions'
+import { changeServiceField, addService, clearFields, setChangedService }from '../../Actions'
 
 import './InputForm.css'
 
 const  InputForm = () =>{
   const item = useSelector(state => state.serviceAdd)
+  const items = useSelector(state => state.serviceList)
+  
   const dispatch = useDispatch()
 
   const handleChange = event => { 
@@ -15,9 +17,26 @@ const  InputForm = () =>{
   }
 
   const handleSubmit = e => {
-    e.preventDefault(); 
-    const {name, price} = item;
-    dispatch(addService(name, price))
+    e.preventDefault();
+    const {id, name, price} = item;
+
+    if (!id) { 
+      dispatch(addService(name, price))
+      dispatch(clearFields())
+      return
+    }
+
+    const result = items.filter(service=>{
+      return service.id === id
+    })
+
+    if (!result.length) {
+      dispatch(addService(name, price))
+      dispatch(clearFields())
+    }
+
+    dispatch(setChangedService(id, name, price))
+    dispatch(clearFields())
   }
 
   const handleCancel = (e) => {

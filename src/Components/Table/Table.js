@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import {removeService} from '../../Actions/'
 
 import './Table.css'
+import { editService } from '../../Actions/actionCreators';
 
 const Table = () => {
 
@@ -13,9 +14,10 @@ const Table = () => {
     dispatch(removeService(id))
   }
 
-  const handleEdit = (id) => {
-    console.log(id)
+  const handleEdit = (id, name, price) => {
+    dispatch(editService(id, name, price))
   }
+  
   return (
   <table className="table col-md-10">
     <thead className='thead-light'>
@@ -32,7 +34,7 @@ const Table = () => {
             <td>{service.name}</td>
             <td>{service.price}</td>
             <td>
-              <button type="button" className="btn btn-outline-success btn-sm action-button" onClick={()=>handleEdit(service.id)}>
+              <button type="button" className="btn btn-outline-success btn-sm action-button" onClick={()=>handleEdit(service.id, service.name, service.price)}>
                 <i className="fa fa-pencil" />
               </button>
               <button type="button" className="btn btn-outline-danger btn-sm action-button" onClick={()=>handleDelete(service.id)}>
