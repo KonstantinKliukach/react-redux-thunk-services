@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter, Route, Link, Redirect, withRoute } from "react-router-dom";
 import store from '../../Store';
 import {Provider} from 'react-redux';
 
@@ -12,8 +13,12 @@ const App = () => {
   return (
     <div className='trainings-app'>
       <Provider store={store}>
-        <InputForm />
-        <Table />
+        <BrowserRouter>
+          <Route exact path="/" render={() => (
+              <Redirect to="/services"/>
+          )}/>
+          <Route path="/services" component={Table}/>
+        </BrowserRouter>
       </Provider>
     </div>
   );    
