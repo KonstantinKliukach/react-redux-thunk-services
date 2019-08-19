@@ -1,21 +1,20 @@
 import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {removeService} from '../../Actions/'
 
 import './Table.css'
 import { editService } from '../../Actions/actionCreators';
 
 const Table = () => {
 
-  const services = useSelector(state => state.serviceList)
+  const services = []
   const dispatch = useDispatch()
 
   const handleDelete = (id) => {
-    dispatch(removeService(id))
+    
   }
 
   const handleEdit = (id, name, price) => {
-    dispatch(editService(id, name, price))
+    
   }
   
   return (
