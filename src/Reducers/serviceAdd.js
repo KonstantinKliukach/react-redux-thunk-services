@@ -1,7 +1,8 @@
 
 const initialState = {
-  name: '',
-  price: '',
+  item: {},
+  loading: '',
+  error: ','
 };
 
 function serviceAddReducer(state = initialState, action) {
