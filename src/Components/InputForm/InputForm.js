@@ -43,16 +43,28 @@ const  InputForm = ({ history, match }) =>{
           <label htmlFor="inputDistance">Стоимость услуги</label>
         </div>
       </div>
-      <div className="form-row align-items-center">
+      <div className="form-row align-items-center my-2">
         <div className="col-md-3">
-          <input className="form-control" id="inputDate" placeholder="Введите название услуги" name="name" value={item.name} onChange={handleChange}/>
+          <input className="form-control" placeholder="Введите название услуги" name="name" value={item.name} onChange={handleChange}/>
         </div>
         <div className="col-md-4">
-          <input className="form-control" id="inputDistance" placeholder="Введите стоимость услуги" name="price" value={item.price} onChange={handleChange}/>
+          <input className="form-control" placeholder="Введите стоимость услуги" name="price" value={item.price} onChange={handleChange}/>
         </div>
-        <div className="col-md-3 d-flex justify-content-around ">
-          <button type="submit" className="btn btn-outline-secondary">Ок</button>
-          <Link to={'/services'} className="btn btn-outline-secondary">Отмена</Link>
+      </div>
+      <div className="form-row align-items-center">
+        <div className="col-md-7">
+          <label htmlFor="inputDate">Введите описание услуги</label>
+        </div>
+      </div>
+      <div className="form-row align-items-center">
+          <div className="col-md-7">
+            <input className="form-control" placeholder="Введите описание" name="content" value={item.content} onChange={handleChange}/>
+          </div>
+      </div>
+      <div className="form-row align-items-center mt-4">
+        <div className="col-md-3 d-flex ">
+            <button type="submit" className="btn btn-outline-secondary mr-3">Ок</button>
+            <Link to={'/services'} className="btn btn-outline-secondary">Отмена</Link>
         </div>
       </div>
     </form>
