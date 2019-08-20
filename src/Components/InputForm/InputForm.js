@@ -1,25 +1,38 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { Link, withRouter } from "react-router-dom";
 import {useSelector, useDispatch} from 'react-redux'
+
+import { serviceChangeField, getItemFromApi } from '../../Actions'
 
 import './InputForm.css'
 
-const  InputForm = () =>{
-  const item = []
+const  InputForm = ({ history, match }) =>{
+  const { item, loading, error} = useSelector(state => state.serviceAdd);
+  const dispatch = useDispatch()
+  console.log(item)
+  useEffect(() => {
+    const { id } = match.params
+    dispatch(getItemFromApi(id))
+  }, [dispatch])
 
-  const handleChange = event => { 
-
+  const handleChange = e => {
+    const {name, value} = e.target 
+    dispatch(serviceChangeField(name, value))
   }
 
   const handleSubmit = e => {
     e.preventDefault();
-
+    history.push('/services')
   }
 
-  const handleCancel = (e) => {
-    e.preventDefault(); 
-
+  if (loading) {
+    return <p>loading..</p>
   }
 
+  if (error) {
+    return <p>{error}</p>
+  }
+  
   return (
     <form className='input-form' onSubmit={handleSubmit}>
       <div className="form-row align-items-center">
@@ -39,11 +52,11 @@ const  InputForm = () =>{
         </div>
         <div className="col-md-3 d-flex justify-content-around ">
           <button type="submit" className="btn btn-outline-secondary">Ок</button>
-          <button className="btn btn-outline-secondary" onClick={handleCancel}>Отмена</button>
+          <Link to={'/services'} className="btn btn-outline-secondary">Отмена</Link>
         </div>
       </div>
     </form>
   )
 }
 
-export default InputForm
+export default withRouter(InputForm)

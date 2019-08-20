@@ -2,16 +2,19 @@ import {
   SERVICE_ADD_REQUEST,
   SERVICE_ADD_ERROR,
   SERVICE_ADD_SUCCESS,
-  SERVICE_CHANGE_FIELD, } from '../Actions'
+  SERVICE_CHANGE_FIELD,
+  FETCH_SERVICE_READY,
+ } from '../Actions'
 
 
 const initialState = {
-  item: {name: '', price: ''},
+  item: {id: '', name: '', price: ''},
   loading: false,
   error: null
 };
 
 function serviceAddReducer(state = initialState, action) {
+  const { item } = state
   switch (action.type) {
     case SERVICE_ADD_REQUEST:
       return {...state, loading: true, error:null}
@@ -22,8 +25,12 @@ function serviceAddReducer(state = initialState, action) {
       return {...initialState}
     case SERVICE_CHANGE_FIELD:
       const { name, value } = action.payload
-      const { item } = state
-      return {...state, item:{...item, [name]: value}}  
+      return {...state, item:{...item, [name]: value}} 
+    case FETCH_SERVICE_READY: 
+      return {
+        ...state, loading: false, error: null,
+        item: {...action.payload.item}
+      }
     default:
     return state
   }

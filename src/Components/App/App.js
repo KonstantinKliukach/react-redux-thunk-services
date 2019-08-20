@@ -17,7 +17,8 @@ const App = () => {
           <Route exact path="/" render={() => (
               <Redirect to="/services"/>
           )}/>
-          <Route path="/services" component={Table}/>
+          <Route exact path="/services" component={Table}/>
+          <Route path="/services/:id" component={InputForm}/>
         </BrowserRouter>
       </Provider>
     </div>

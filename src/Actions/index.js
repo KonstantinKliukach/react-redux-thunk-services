@@ -7,6 +7,7 @@ export {
   SERVICE_ADD_ERROR,
   SERVICE_ADD_SUCCESS,
   SERVICE_CHANGE_FIELD,
+  FETCH_SERVICE_READY,
 } from './actionTypes'
 
 
@@ -17,5 +18,6 @@ export {
   serviceChangeField,
   serviceRemove,
   fetchItemsFromApi, 
-  removeItemFromApi
+  removeItemFromApi,
+  getItemFromApi
 } from './actionCreators'

@@ -5,6 +5,8 @@ import {
 
   REMOVE_SERVICE,
 
+  FETCH_SERVICE_READY,
+
   SERVICE_ADD_REQUEST,
   SERVICE_ADD_ERROR,
   SERVICE_ADD_SUCCESS,
@@ -17,12 +19,17 @@ export const fetchServicesRequest = () => {
   return {type: FETCH_REQUEST};
 };
 
-export const fetchError = (message) => {
+
+export const fetchServicesError = (message) => {
   return {type: FETCH_ERROR, payload: {message}};
 };
   
-export const fetchReady = (items) => {
+export const fetchServicesReady = (items) => {
   return {type: FETCH_READY, payload: {items}};
+};
+
+export const fetchServiceReady = (item) => {
+  return {type: FETCH_SERVICE_READY, payload: {item}};
 };
 
 export const serviceAddRequest = () => {
@@ -46,7 +53,6 @@ export const serviceRemove = (id) => {
   return {type: REMOVE_SERVICE, payload: {id}};
 };
 
-
 export const removeItemFromApi = (id) => async dispatch => {
   dispatch(fetchServicesRequest())
   try {
@@ -58,7 +64,7 @@ export const removeItemFromApi = (id) => async dispatch => {
     }
     dispatch(fetchItemsFromApi())
   } catch (e) {
-    dispatch(fetchError(e.message))
+    dispatch(fetchServicesError(e.message))
   }
 }
 
@@ -70,9 +76,24 @@ export const fetchItemsFromApi = () => async dispatch => {
       throw new Error(response.statusText);
     }
     const data = await response.json();
-    dispatch(fetchReady(data));
+    dispatch(fetchServicesReady(data));
   
   } catch (e) {
-    dispatch(fetchError(e.message))
+    dispatch(fetchServicesError(e.message))
+  }
+}
+
+export const getItemFromApi = (id) => async dispatch => {
+  dispatch(serviceAddRequest())
+  try {
+    const response = await fetch(`http://localhost:7070/api/services/${id}`)
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    const data = await response.json();
+    dispatch(fetchServiceReady(data));
+  
+  } catch (e) {
+    dispatch(serviceAddError(e.message))
   }
 }
