@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 import { Link, withRouter } from "react-router-dom";
 import {useSelector, useDispatch} from 'react-redux'
 
-import { serviceChangeField, getItemFromApi } from '../../Actions'
+import { serviceChangeField, getItemFromApi, sendItemToApi } from '../../Actions'
 
 import './InputForm.css'
 
 const  InputForm = ({ history, match }) =>{
   const { item, loading, error} = useSelector(state => state.serviceAdd);
   const dispatch = useDispatch()
-  console.log(item)
+
   useEffect(() => {
     const { id } = match.params
     dispatch(getItemFromApi(id))
@@ -22,7 +22,11 @@ const  InputForm = ({ history, match }) =>{
 
   const handleSubmit = e => {
     e.preventDefault();
-    history.push('/services')
+    dispatch(sendItemToApi(item)).then(() => {
+      if (!error)  {
+        history.push('/services')
+      }
+    })
   }
 
   if (loading) {

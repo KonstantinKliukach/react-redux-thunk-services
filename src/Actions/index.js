@@ -19,5 +19,6 @@ export {
   serviceRemove,
   fetchItemsFromApi, 
   removeItemFromApi,
-  getItemFromApi
+  getItemFromApi,
+  sendItemToApi
 } from './actionCreators'

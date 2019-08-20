@@ -41,8 +41,8 @@ export const serviceAddError = (message) => {
   return {type: SERVICE_ADD_ERROR, payload: {message}};
 };
   
-export const serviceAddSuccess = (items) => {
-  return {type: SERVICE_ADD_SUCCESS, payload: {items}};
+export const serviceAddSuccess = () => {
+  return {type: SERVICE_ADD_SUCCESS};
 };
 
 export const serviceChangeField = (name, value) => {
@@ -92,6 +92,24 @@ export const getItemFromApi = (id) => async dispatch => {
     }
     const data = await response.json();
     dispatch(fetchServiceReady(data));
+  
+  } catch (e) {
+    dispatch(serviceAddError(e.message))
+  }
+}
+
+export const sendItemToApi = (item) => async dispatch => {
+  dispatch(serviceAddRequest())
+  try {
+    const response = await fetch(`http://localhost:7070/api/services/`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(item),
+    })
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    dispatch(serviceAddSuccess());
   
   } catch (e) {
     dispatch(serviceAddError(e.message))
