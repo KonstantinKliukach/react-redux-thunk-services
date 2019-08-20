@@ -1,5 +1,3 @@
-import nanoid from 'nanoid';
-
 import { FETCH_REQUEST, FETCH_ERROR, FETCH_READY, REMOVE_SERVICE } from '../Actions'
 
 const initialState = {
@@ -13,8 +11,8 @@ function serviceListReducer(state = initialState, action) {
     case FETCH_REQUEST: 
       return {...state, loading: true, error:null};
     case FETCH_ERROR: 
-      const {error} = action.payload;
-      return {...state, loading:false, error};
+      const {message} = action.payload;
+      return {...state, loading:false, error: message};
     case FETCH_READY: 
       const {items} = action.payload;
       return {...state, items, loading: false, error:null}
